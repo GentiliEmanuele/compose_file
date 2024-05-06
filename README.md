@@ -2,7 +2,7 @@
 **Regole per l'esecuzione dell'applicazione**
 
 ***Configurazione del service registry***
-Per modificare la configurazione del service registry si deve modificare questo file. In particolare, è possibile cambiare il numero di porta su cui esso si mette in ascolto. Quando si modifica il numero di porta del service registry si deve anche modificare la variabile d'ambiente *REGISTRY* per tutti i server. E' necessario anche cambiare il numero di porta che il container deve esporre nella direttiva ports.
+Per modificare la configurazione del service registry si deve modificare questo file. In particolare, è possibile cambiare il numero di porta su cui esso si mette in ascolto e l'indirizzo IP. Quando si modifica il numero di porta del service registry si deve anche modificare la variabile d'ambiente *REGISTRY* per tutti i server. E' necessario anche cambiare il numero di porta che il container deve esporre nella direttiva ports.
 Link alla repository: https://github.com/GentiliEmanuele/service_registry.git
 
 ***Configurazione dei server***

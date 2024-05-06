@@ -11,6 +11,20 @@ services:
     networks:
       container_network:
         ipv4_address: 172.23.0.2
+        
+  load_balancer: 
+    build: https://github.com/GentiliEmanuele/load_balancer.git
+    environment:
+      - REGISTRY=172.23.0.2:4232
+      - PORT=5050
+    entrypoint: ./loadbalancer/loadbalancer
+    ports:
+      - "5050:5050"
+    depends_on:
+      - service_registry
+    networks:
+      container_network:
+        ipv4_address: 172.23.0.3       
       
   server1:
     container_name: server1   
@@ -23,9 +37,10 @@ services:
       - "12340:1234"
     depends_on:
       - service_registry
+      - load_balancer      
     networks:
       container_network:
-        ipv4_address: 172.23.0.3
+        ipv4_address: 172.23.0.4
     
   server2:
     container_name: server2   
@@ -38,9 +53,10 @@ services:
       - "12341:1234"
     depends_on:
       - service_registry
+      - load_balancer      
     networks:
       container_network:
-        ipv4_address: 172.23.0.4
+        ipv4_address: 172.23.0.5
       
   server3:
     container_name: server3   
@@ -53,9 +69,10 @@ services:
       - "12342:1234"
     depends_on:
       - service_registry
+      - load_balancer      
     networks:
       container_network:
-        ipv4_address: 172.23.0.5
+        ipv4_address: 172.23.0.6
 
   server4:
     container_name: server4   
@@ -68,9 +85,10 @@ services:
       - "12343:1234"
     depends_on:
       - service_registry
+      - load_balancer      
     networks:
       container_network:
-        ipv4_address: 172.23.0.6
+        ipv4_address: 172.23.0.7
       
   server5:
     container_name: server5   
@@ -83,9 +101,10 @@ services:
       - "12344:1234"
     depends_on:
       - service_registry
+      - load_balancer      
     networks:
       container_network:
-        ipv4_address: 172.23.0.7
+        ipv4_address: 172.23.0.8
       
   server6:
     container_name: server6  
@@ -98,9 +117,10 @@ services:
       - "12345:1234"
     depends_on:
       - service_registry
+      - load_balancer      
     networks:
       container_network:
-        ipv4_address: 172.23.0.8
+        ipv4_address: 172.23.0.9
     
   server7:
     container_name: server7   
@@ -113,9 +133,10 @@ services:
       - "12346:1234"
     depends_on:
       - service_registry
+      - load_balancer      
     networks:
       container_network:
-        ipv4_address: 172.23.0.9
+        ipv4_address: 172.23.0.10
       
   server8:
     container_name: server8   
@@ -128,6 +149,7 @@ services:
       - "12347:1234"
     depends_on:
       - service_registry
+      - load_balancer      
     networks:
       container_network:
         ipv4_address: 172.23.0.11
@@ -143,6 +165,7 @@ services:
       - "12348:1234"
     depends_on:
       - service_registry
+      - load_balancer
     networks:
       container_network:
         ipv4_address: 172.23.0.12
@@ -158,43 +181,21 @@ services:
       - "12349:1234"
     depends_on:
       - service_registry
+      - load_balancer
     networks:
       container_network:
         ipv4_address: 172.23.0.13
-      
-  load_balancer: 
-    build: https://github.com/GentiliEmanuele/load_balancer.git
-    environment:
-      - REGISTRY=172.23.0.2:4232
-      - PORT=5050
-    entrypoint: ./loadbalancer/loadbalancer
-    ports:
-      - "5050:5050"
-    depends_on:
-      - service_registry
-      - server1
-      - server2
-      - server3
-      - server4
-      - server5
-      - server6
-      - server7
-      - server8
-      - server9
-      - server10
-    networks:
-      container_network:
-        ipv4_address: 172.23.0.10       
 
   client1:
     build: https://github.com/GentiliEmanuele/client.git
     environment:
-      - LOAD_BALANCER=172.23.0.10:5050
+      - LOAD_BALANCER=172.23.0.3:5050
     entrypoint: ./client/client fib 5 pow 2 fib 45 pow 45 fib 40 pow 7 fib 9 fib 35 pow 40 fib 2
     depends_on:
       - load_balancer
     networks:
-      - container_network
+      container_network:
+        ipv4_address: 172.23.0.14
 
 networks:
   container_network:

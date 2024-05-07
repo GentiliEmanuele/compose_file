@@ -2,33 +2,36 @@ version: '3'
 services:
   service_registry:
     container_name: service_registry
-    build: https://github.com/GentiliEmanuele/service_registry.git
+    #build: https://github.com/GentiliEmanuele/service_registry.git
+    build: C:\Users\egent\GolandProjects\serviceRegistry
     environment:
       - PORT=4232
+      - LOAD_BALANCER=172.23.0.3:5050
     entrypoint: ./registry/registry
     ports:
       - "4232:4232"
+    depends_on:
+      - load_balancer
     networks:
       container_network:
         ipv4_address: 172.23.0.2
-        
+
   load_balancer: 
-    build: https://github.com/GentiliEmanuele/load_balancer.git
+    #build: https://github.com/GentiliEmanuele/load_balancer.git
+    build: C:\Users\egent\GolandProjects\loadbalancer1
     environment:
-      - REGISTRY=172.23.0.2:4232
       - PORT=5050
     entrypoint: ./loadbalancer/loadbalancer
     ports:
       - "5050:5050"
-    depends_on:
-      - service_registry
     networks:
       container_network:
         ipv4_address: 172.23.0.3       
       
   server1:
     container_name: server1   
-    build: https://github.com/GentiliEmanuele/server.git
+    #build: https://github.com/GentiliEmanuele/server.git
+    build: C:\Users\egent\GolandProjects\server
     environment:
       - REGISTRY=172.23.0.2:4232
       - PORT=1234
@@ -36,15 +39,15 @@ services:
     ports:
       - "12340:1234"
     depends_on:
-      - service_registry
-      - load_balancer      
+      - service_registry    
     networks:
       container_network:
         ipv4_address: 172.23.0.4
     
   server2:
     container_name: server2   
-    build: https://github.com/GentiliEmanuele/server.git
+    #build: https://github.com/GentiliEmanuele/server.git
+    build: C:\Users\egent\GolandProjects\server
     environment:
       - REGISTRY=172.23.0.2:4232
       - PORT=1234
@@ -52,15 +55,15 @@ services:
     ports:
       - "12341:1234"
     depends_on:
-      - service_registry
-      - load_balancer      
+      - service_registry  
     networks:
       container_network:
         ipv4_address: 172.23.0.5
       
   server3:
     container_name: server3   
-    build: https://github.com/GentiliEmanuele/server.git
+    #build: https://github.com/GentiliEmanuele/server.git
+    build: C:\Users\egent\GolandProjects\server
     environment:
       - REGISTRY=172.23.0.2:4232
       - PORT=1234
@@ -68,15 +71,15 @@ services:
     ports:
       - "12342:1234"
     depends_on:
-      - service_registry
-      - load_balancer      
+      - service_registry     
     networks:
       container_network:
         ipv4_address: 172.23.0.6
 
   server4:
     container_name: server4   
-    build: https://github.com/GentiliEmanuele/server.git
+    #build: https://github.com/GentiliEmanuele/server.git   
+    build: C:\Users\egent\GolandProjects\server
     environment:
       - REGISTRY=172.23.0.2:4232
       - PORT=1234
@@ -84,115 +87,23 @@ services:
     ports:
       - "12343:1234"
     depends_on:
-      - service_registry
-      - load_balancer      
+      - service_registry     
     networks:
       container_network:
         ipv4_address: 172.23.0.7
       
-  server5:
-    container_name: server5   
-    build: https://github.com/GentiliEmanuele/server.git
-    environment:
-      - REGISTRY=172.23.0.2:4232
-      - PORT=1234
-    entrypoint: ./server/server
-    ports:
-      - "12344:1234"
-    depends_on:
-      - service_registry
-      - load_balancer      
-    networks:
-      container_network:
-        ipv4_address: 172.23.0.8
-      
-  server6:
-    container_name: server6  
-    build: https://github.com/GentiliEmanuele/server.git
-    environment:
-      - REGISTRY=172.23.0.2:4232
-      - PORT=1234
-    entrypoint: ./server/server
-    ports:
-      - "12345:1234"
-    depends_on:
-      - service_registry
-      - load_balancer      
-    networks:
-      container_network:
-        ipv4_address: 172.23.0.9
-    
-  server7:
-    container_name: server7   
-    build: https://github.com/GentiliEmanuele/server.git
-    environment:
-      - REGISTRY=172.23.0.2:4232
-      - PORT=1234
-    entrypoint: ./server/server
-    ports:
-      - "12346:1234"
-    depends_on:
-      - service_registry
-      - load_balancer      
-    networks:
-      container_network:
-        ipv4_address: 172.23.0.10
-      
-  server8:
-    container_name: server8   
-    build: https://github.com/GentiliEmanuele/server.git
-    environment:
-      - REGISTRY=172.23.0.2:4232
-      - PORT=1234
-    entrypoint: ./server/server
-    ports:
-      - "12347:1234"
-    depends_on:
-      - service_registry
-      - load_balancer      
-    networks:
-      container_network:
-        ipv4_address: 172.23.0.11
-
-  server9:
-    container_name: server9 
-    build: https://github.com/GentiliEmanuele/server.git
-    environment:
-      - REGISTRY=172.23.0.2:4232
-      - PORT=1234
-    entrypoint: ./server/server
-    ports:
-      - "12348:1234"
-    depends_on:
-      - service_registry
-      - load_balancer
-    networks:
-      container_network:
-        ipv4_address: 172.23.0.12
-      
-  server10:
-    container_name: server10  
-    build: https://github.com/GentiliEmanuele/server.git
-    environment:
-      - REGISTRY=172.23.0.2:4232
-      - PORT=1234
-    entrypoint: ./server/server
-    ports:
-      - "12349:1234"
-    depends_on:
-      - service_registry
-      - load_balancer
-    networks:
-      container_network:
-        ipv4_address: 172.23.0.13
 
   client1:
     build: https://github.com/GentiliEmanuele/client.git
     environment:
       - LOAD_BALANCER=172.23.0.3:5050
-    entrypoint: ./client/client fib 5 pow 2 fib 45 pow 45 fib 40 pow 7 fib 9 fib 35 pow 40 fib 2
+    entrypoint: ./client/client fib 5 pow 2 fib 45 pow 45 fib 50 pow 7 fib 9 fib 40 pow 45 fib 2
     depends_on:
       - load_balancer
+      - server1
+      - server2
+      - server3
+      - server4
     networks:
       container_network:
         ipv4_address: 172.23.0.14

@@ -91,7 +91,7 @@ services:
     build: https://github.com/GentiliEmanuele/client.git
     environment:
       - LOAD_BALANCER=172.23.0.3:5050
-    entrypoint: ./client/client fib 5 pow 2 fib 45 pow 45 fib 50 pow 7 fib 9 fib 40 pow 45 fib 2
+    entrypoint: ./client/client pow 3 fib 15 pow 9 fib 45 fib 35 fib 30 pow 4 fib 5
     depends_on:
       - load_balancer
       - server1

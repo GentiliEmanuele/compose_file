@@ -16,6 +16,7 @@ services:
         ipv4_address: 172.23.0.2
 
   load_balancer: 
+    container_name: load_balancer
     build: https://github.com/GentiliEmanuele/load_balancer.git
     environment:
       - PORT=5050
@@ -88,6 +89,7 @@ services:
       
 
   client1:
+    container_name: client1
     build: https://github.com/GentiliEmanuele/client.git
     environment:
       - LOAD_BALANCER=172.23.0.3:5050
